@@ -7,6 +7,7 @@
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
     <meta name="description" content="">
     <meta name="author" content="">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
 
     <title>Users</title>
 
@@ -14,6 +15,7 @@
 
     <!-- <link href="{{ asset('css/all.min.css') }}" rel="stylesheet" type="text/css"> -->
     <link href="css/all.min.css" rel="stylesheet" type="text/css">
+    <link href="css/extras.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
@@ -41,7 +43,8 @@
             <!-- Nav Item - Dashboard -->
             <li class="nav-item active">
                 <a class="nav-link" href={{ url('/dashboard') }}>
-                    <span>Dashboard</span></a>
+                    <span>Dashboard</span>
+                </a>
             </li>
 
             <!-- Divider -->
@@ -54,15 +57,22 @@
             </li>
 
             <!-- Nav Item - Agents -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href={{ url('/agents') }}>
                     <span>Agents</span></a>
             </li>
 
             <!-- Nav Item - Couriers -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href={{ url('/couriers') }}>
                     <span>Couriers</span></a>
+            </li>
+
+            <!-- Nav Item - Items -->
+            <li class="nav-item">
+                <a class="nav-link" href={{ url('/items') }}>
+                    <span>Items</span></a>
+            </li>
 
         </ul>
         <!-- End of Sidebar -->
@@ -101,7 +111,16 @@
 
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
+                    <!-- AJAX Error Handler -->
+                    <div class="alert alert-danger" id="errorDisplay" style="display: none">
+                        <ul>
+                            <li id="errorNama" style="display:none">Username field is empty.</li>
+                            <li id="errorPassword" style="display:none">Password field is empty.</li>
+                            <li id="errorAlamat" style="display:none">Alamat field is empty.</li>
+                        </ul>
+                    </div>
 
+                    <!-- Laravel Error Handler -->
                     @if($errors->any())
                     <div class="alert alert-danger">
                         <ul>
@@ -128,27 +147,31 @@
                             <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
                                 For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
 
-                            <!-- Buttons -->
-                            <!-- <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create User</button> -->
-                            <!-- onclick="window.location.href = '/users/create' -->
-                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
-                                Add User
-                            </button>
 
-                            <button onclick="location.href='/users/destroyAll'" type="submit" class="btn btn-danger">Delete all users</button>
+                            <div class="d-flex flex-row gap-3">
+                                <!-- Add User Buttons -->
+                                <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#addUserModal" id="addButton" name="addButton">
+                                    Add User
+                                </button>
+                                <!-- Delete All Users Button -->
+                                <button onclick="location.href='/users/destroyAll'" type="submit" class="btn btn-danger">Delete all users</button>
+                                <!-- Search Button -->
+                                <form class="form-inline my-2 my-lg-0" id="searchForm">
+                                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="inputSearch" name="inputSearch">
+                                    <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchButton">Search</button>
+                                </form>
+                            </div>
 
                             <!-- Modal -->
-
-                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                            <div class="modal fade" id="addUserModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
                                         <div class="modal-header">
                                             <h5 class="modal-title" id="exampleModalLabel">Add New User</h5>
                                             <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="modal-body">
-                                            <form action="/users/create" method="post">
-                                                @csrf
+                                        <form id="addUserForm" name="addUserForm">
+                                            <div class="modal-body">
                                                 <div class="d-flex">
                                                     <div style="margin-right:10px">
                                                         <label for="username">Username:</label><br><br>
@@ -161,21 +184,22 @@
                                                         <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga"><br>
                                                     </div>
                                                 </div>
-                                                <div class="modal-footer" style="margin-top: 5%">
-                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                    <button type="submit" class="btn btn-primary" value="Submit">Add User</button>
-                                                </div>
-                                            </form>
-                                        </div>
+                                            </div>
+                                            <div class="modal-footer" style="margin-top: 5%">
+                                                <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                <button type="submit" class="btn btn-primary" id="submitButton" name="submitButton">Add User</button>
+                                            </div>
+                                        </form>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
 
+
                     <!-- User Table -->
                     <div>
-                        <table class="table table-bordered" style="margin-top: 20px">
+                        <table class="table table-bordered" style="margin-top: 20px" id="userTable">
                             <thead>
                                 <tr>
                                     <th class="col-sm-1">Id</th>
@@ -188,14 +212,14 @@
                             </thead>
                             <tbody>
                                 @foreach($users as $user)
-                                <tr>
-                                    <td>{{ $user->id }}</td>
+                                <tr id="table-contents">
+                                    <td>{{ $user->ID_user }}</td>
                                     <td>{{ $user->username }}</td>
                                     <!-- <td>{{ $user->password }}</td> -->
                                     <td>{{ $user->alamat }}</td>
 
                                     <td>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $user->id}}">Edit</button>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $user->ID_user}}">Edit</button>
                                     </td>
                                     <td>
                                         <form action="/users/destroy/{{$user->username}}" method="get">
@@ -203,7 +227,7 @@
                                         </form>
                                     </td>
                                 </tr>
-                                <div class="modal fade" id="modalEdit{{$user->id}}">
+                                <div class="modal fade" id="modalEdit{{$user->ID_user}}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -290,7 +314,49 @@
 
     <!-- Bootstrap CDN -->
     <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
+    <script src="https://code.jquery.com/jquery-3.6.0.js" integrity="sha256-H+K7U5CnXl1h5ywQfKtSj8PCmoN9aaq30gDh27Xc0jk=" crossorigin="anonymous"></script>
+    <script type="text/javascript">
+        $(document).ready(function() {
+            $('#addUserForm').on('submit', function(e) {
+                e.preventDefault();
+                $.ajaxSetup({
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    }
+                });
+                $.ajax({
+                    type: "POST",
+                    url: '/users/create',
+                    data: {
+                        _token: "{{ csrf_token() }}",
+                        username: $('#username').val(),
+                        password: $('#password').val(),
+                        alamat: $('#alamat').val(),
+                    },
+                    success: function(response) {
+                        $('#addUserModal').modal('hide');
+                        alert('Successfully creating a new user.')
+                        location.reload();
+                    },
+                    error: function(response) {
+                        alert('Failed to create a new user, please fill the empty field.');
+                    }
+                })
+            })
 
+            // $('#searchForm').submit(function(e) {
+            //     e.preventDefault();
+            //     var inputs = $(this).serialize();
+            //     $.ajax({
+            //         type: "GET",
+            //         url: '/users/search',
+            //         data: {
+            //             key: inputs,
+            //         }
+            //     })
+            // })
+        });
+    </script>
 </body>
 
 </html>

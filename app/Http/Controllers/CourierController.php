@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Courier;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class CourierController extends Controller
 {
-    // /**
-    //  * Display a listing of the resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function index()
-    // {
-    //     return view('welcome');
-    // }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -26,21 +26,21 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
+
         $request->validate([
             'username' => ['required'],
             'password' => ['required'],
-            'alamat' => ['required'],
+            'status' => ['required'],
         ]);
 
+        $courier = new Courier;
+        $courier->username = $request->username;
+        $courier->password = Hash::make($request->password);
+        $courier->status = $request->status;
 
-        $user = new User;
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
-        $user->alamat = $request->alamat;
+        $courier->save();
 
-        $user->save();
-
-        return response()->json(['success' => 'Successfully']);
+        return redirect('/couriers');
     }
 
     /**
@@ -62,9 +62,9 @@ class UserController extends Controller
      */
     public function show()
     {
-        $users = DB::table('users')->get();
+        $couriers = DB::table('couriers')->get();
 
-        return view('users')->with('users', $users);
+        return view('couriers')->with('couriers', $couriers);
     }
 
     /**
@@ -85,18 +85,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $user)
+    public function update(Request $request, $courier)
     {
         $request->validate([
             'username' => ['required'],
-            'alamat' => ['required'],
+            'status' => ['required'],
         ]);
 
-        DB::table('users')
-            ->updateOrInsert(
-                ['username' => $user],
-                ['username' => $request->username, 'alamat' => $request->alamat]
-            );
+        DB::table('couriers')->updateOrInsert(
+            ['username' => $courier],
+            ['username' => $request->username, 'status' => $request->status]
+        );
 
         return redirect()->back();
     }
@@ -107,16 +106,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user)
+    public function destroy($courier)
     {
-        DB::table('users')->where('username', $user)->delete();
+        DB::table('couriers')->where('username', $courier)->delete();
 
         return redirect()->back();
     }
 
     public function destroyAll()
     {
-        DB::table('users')->truncate();
+        DB::table('couriers')->truncate();
 
         return redirect()->back();
     }

@@ -3,15 +3,15 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
+use App\Models\Agent;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Agent>
  */
-class UserFactory extends Factory
+class AgentFactory extends Factory
 {
-    protected $model = User::class;
+    protected $model = Agent::class;
     /**
      * Define the model's default state.
      *

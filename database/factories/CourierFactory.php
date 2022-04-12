@@ -3,26 +3,30 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
+use App\Models\Courier;
+use Illuminate\Support\Str;
 use Illuminate\Support\Facades\Hash;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Post>
  */
-class UserFactory extends Factory
+class CourierFactory extends Factory
 {
-    protected $model = User::class;
+    protected $model = Courier::class;
     /**
      * Define the model's default state.
      *
      * @return array<string, mixed>
      */
+
+
+
     public function definition()
     {
         return [
-            'username' => $this->faker->username,
+            'username' => $this->faker->name,
             'password' => Hash::make($this->faker->username),
-            'alamat' => $this->faker->address
+            'status' => $this->faker->randomElement($array = array('Ready', 'Nonaktif', 'Transit'))
         ];
     }
 }

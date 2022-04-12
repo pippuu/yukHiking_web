@@ -3,21 +3,21 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
-use App\Models\User;
+use App\Models\Agent;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Hash;
 
-class UserController extends Controller
+class AgentController extends Controller
 {
-    // /**
-    //  * Display a listing of the resource.
-    //  *
-    //  * @return \Illuminate\Http\Response
-    //  */
-    // public function index()
-    // {
-    //     return view('welcome');
-    // }
+    /**
+     * Display a listing of the resource.
+     *
+     * @return \Illuminate\Http\Response
+     */
+    public function index()
+    {
+        //
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -26,21 +26,21 @@ class UserController extends Controller
      */
     public function create(Request $request)
     {
+
         $request->validate([
             'username' => ['required'],
             'password' => ['required'],
             'alamat' => ['required'],
         ]);
 
+        $agent = new Agent;
+        $agent->username = $request->username;
+        $agent->password = Hash::make($request->password);
+        $agent->alamat = $request->alamat;
 
-        $user = new User;
-        $user->username = $request->username;
-        $user->password = Hash::make($request->password);
-        $user->alamat = $request->alamat;
+        $agent->save();
 
-        $user->save();
-
-        return response()->json(['success' => 'Successfully']);
+        return redirect('/agents');
     }
 
     /**
@@ -62,9 +62,9 @@ class UserController extends Controller
      */
     public function show()
     {
-        $users = DB::table('users')->get();
+        $agent = DB::table('agents')->get();
 
-        return view('users')->with('users', $users);
+        return view('agents')->with('agents', $agent);
     }
 
     /**
@@ -85,18 +85,17 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request, $user)
+    public function update(Request $request, $agent)
     {
         $request->validate([
             'username' => ['required'],
             'alamat' => ['required'],
         ]);
 
-        DB::table('users')
-            ->updateOrInsert(
-                ['username' => $user],
-                ['username' => $request->username, 'alamat' => $request->alamat]
-            );
+        DB::table('agents')->updateOrInsert(
+            ['username' => $agent],
+            ['username' => $request->username, 'alamat' => $request->alamat]
+        );
 
         return redirect()->back();
     }
@@ -107,16 +106,16 @@ class UserController extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function destroy($user)
+    public function destroy($agent)
     {
-        DB::table('users')->where('username', $user)->delete();
+        DB::table('agents')->where('username', $agent)->delete();
 
         return redirect()->back();
     }
 
     public function destroyAll()
     {
-        DB::table('users')->truncate();
+        DB::table('agents')->truncate();
 
         return redirect()->back();
     }

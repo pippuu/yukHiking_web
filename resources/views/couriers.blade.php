@@ -15,6 +15,7 @@
     <!-- <link href="{{ asset('css/all.min.css') }}" rel="stylesheet" type="text/css"> -->
     <link href="css/all.min.css" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- Custom styles for this template-->
     <!-- <link href="{{ public_path('css'),  }}css/sb-admin-2.min.css" rel="stylesheet"> -->
@@ -47,13 +48,13 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Users -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href={{ url('/users') }}>
                     <span>Users</span></a>
             </li>
 
             <!-- Nav Item - Agents -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href={{ url('/agents') }}>
                     <span>Agents</span></a>
             </li>
@@ -62,6 +63,13 @@
             <li class="nav-item active">
                 <a class="nav-link" href={{ url('/couriers') }}>
                     <span>Couriers</span></a>
+            </li>
+
+            <!-- Nav Item - Items -->
+            <li class="nav-item">
+                <a class="nav-link" href={{ url('/items') }}>
+                    <span>Items</span></a>
+            </li>
 
         </ul>
         <!-- End of Sidebar -->
@@ -90,7 +98,7 @@
 
                         <!-- Nav Item - Log Out Button -->
                         <li class="nav-item">
-                            <a href="#" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Log Out</a>
+                            <a href="/logout" class="d-none d-sm-inline-block btn btn-sm btn-primary shadow-sm">Log Out</a>
                         </li>
 
                     </ul>
@@ -101,6 +109,16 @@
                 <!-- Begin Page Content -->
                 <div class="container-fluid">
 
+                    @if($errors->any())
+                    <div class="alert alert-danger">
+                        <ul>
+                            @foreach($errors->all() as $error)
+                            <li>{{ $error }}</li>
+                            @endforeach
+                        </ul>
+                    </div>
+                    @endif
+
                     <!-- Page Heading -->
                     <div class="d-sm-flex align-items-center justify-content-between mb-4">
                         <h1 class="h3 mb-0 text-gray-800">Couriers</h1>
@@ -109,81 +127,134 @@
                     <!-- Content Row -->
                     <div class="row">
 
-                        <!-- Total Users Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-primary shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-primary text-uppercase mb-1">
-                                                Total Users</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">11</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                        <!-- Begin Page Content -->
+                        <div class="container-fluid">
 
-                        <!-- Total Agents Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-success shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
-                                                Total Agents</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <!-- Page Heading -->
+                            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
+                            <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
+                                For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
 
-                        <!-- Total Rent Items Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-warning shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
-                                                Total Rent Items</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
-                                        </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
+                            <!-- Buttons -->
+                            <!-- <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create User</button> -->
+                            <!-- onclick="window.location.href = '/users/create' -->
+                            <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
+                                Add Courier
+                            </button>
 
-                        <!-- Total Rents Card -->
-                        <div class="col-xl-3 col-md-6 mb-4">
-                            <div class="card border-left-info shadow h-100 py-2">
-                                <div class="card-body">
-                                    <div class="row no-gutters align-items-center">
-                                        <div class="col mr-2">
-                                            <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Total Rents</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                            <!-- <button onclick="location.href='/couriers/createDummy'" type="submit" class="btn btn-primary" method="post">Enter data dummy</button> -->
+
+                            <button onclick="location.href='/couriers/destroyAll'" type="submit" class="btn btn-danger">Delete all courier</button>
+
+                            <!-- Modal -->
+
+                            <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Add New Courier</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                         </div>
-                                        <div class="col-auto">
-                                            <i class="fas fa-comments fa-2x text-gray-300"></i>
+                                        <div class="modal-body">
+                                            <form action="/couriers/create" method="post">
+                                                @csrf
+                                                <div class="d-flex">
+                                                    <div style="margin-right:10px">
+                                                        <label for="username">Username:</label><br><br>
+                                                        <label for="password">Password:</label><br><br>
+                                                        <label for="status">Status:</label><br><br>
+                                                    </div>
+                                                    <div>
+                                                        <input type="text" id="username" name="username" placeholder="Budi"><br><br>
+                                                        <input type="password" id="password" name="password" placeholder="*****"><br><br>
+                                                        <select id="status" name="status">
+                                                            <option>Aktif</option>
+                                                            <option>Nonaktif</option>
+                                                        </select>
+                                                        <br>
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="margin-top: 5%">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                    <button type="submit" class="btn btn-primary" value="Submit">Add Courier</button>
+                                                </div>
+                                            </form>
                                         </div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+
+                    <!-- Courier Table -->
+                    <div>
+                        <table class="table table-bordered" style="margin-top: 20px">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-1">Id</th>
+                                    <th class="col-sm-2">Username</th>
+                                    <!-- <th>Password (Encrypted)</th> -->
+                                    <th>Status</th>
+                                    <th class="col-sm-2">Edit</th>
+                                    <th class="col-sm-2">Delete</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($couriers as $courier)
+                                <tr>
+                                    <td>{{ $courier->ID_courier }}</td>
+                                    <td>{{ $courier->username }}</td>
+                                    <!-- <td>$user->password</td> -->
+                                    <td>{{ $courier->status }}</td>
+
+                                    <td>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $courier->ID_courier}}">Edit</button>
+                                    </td>
+                                    <td>
+                                        <form action="/couriers/destroy/{{ $courier->username }}" method="get">
+                                            <button type="submit" class="btn btn-danger">Delete</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <div class="modal fade" id="modalEdit{{$courier->ID_courier}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalEdit">Edit Courier</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <form action="/couriers/update/{{ $courier->username }}" method="post">
+                                                    @csrf
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            <label for="username">Username Baru:</label><br><br>
+                                                            <label for="status">Status Baru:</label><br><br>
+                                                        </div>
+                                                        <div>
+                                                            <input type="text" id="username" name="username" placeholder="Budi"><br><br>
+                                                            <select id="status" name="status">
+                                                                <option>Aktif</option>
+                                                                <option>Nonaktif</option>
+                                                            </select>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="margin-top: 5%">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary" value="Submit">Update Courier</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </tbody>
+                        </table>
+                    </div>
                 </div>
                 <!-- /.container-fluid -->
-
             </div>
             <!-- End of Main Content -->
 
@@ -227,22 +298,7 @@
         </div>
     </div>
 
-    <!-- Bootstrap core JavaScript-->
-    <script src="vendor/jquery/jquery.min.js"></script>
-    <script src="vendor/bootstrap/js/bootstrap.bundle.min.js"></script>
-
-    <!-- Core plugin JavaScript-->
-    <script src="vendor/jquery-easing/jquery.easing.min.js"></script>
-
-    <!-- Custom scripts for all pages-->
-    <script src="js/sb-admin-2.min.js"></script>
-
-    <!-- Page level plugins -->
-    <script src="vendor/chart.js/Chart.min.js"></script>
-
-    <!-- Page level custom scripts -->
-    <script src="js/demo/chart-area-demo.js"></script>
-    <script src="js/demo/chart-pie-demo.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/js/bootstrap.bundle.min.js" integrity="sha384-MrcW6ZMFYlzcLA8Nl+NtUVF0sA7MsXsP1UyJoMp4YLEuNSfAP+JcXn/tWtIaxVXM" crossorigin="anonymous"></script>
 
 </body>
 

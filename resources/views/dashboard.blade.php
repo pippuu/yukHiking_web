@@ -47,21 +47,25 @@
             <hr class="sidebar-divider my-0">
 
             <!-- Nav Item - Users -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href={{ url('/users') }}>
                     <span>Users</span></a>
             </li>
 
             <!-- Nav Item - Agents -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href={{ url('/agents') }}>
                     <span>Agents</span></a>
             </li>
 
             <!-- Nav Item - Couriers -->
-            <li class="nav-item active">
+            <li class="nav-item">
                 <a class="nav-link" href={{ url('/couriers') }}>
                     <span>Couriers</span></a>
+                <!-- Nav Item - Items -->
+            <li class="nav-item">
+                <a class="nav-link" href={{ url('/items') }}>
+                    <span>Items</span></a>
 
         </ul>
         <!-- End of Sidebar -->
@@ -135,7 +139,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-success text-uppercase mb-1">
                                                 Total Agents</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{$totalagents}}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-dollar-sign fa-2x text-gray-300"></i>
@@ -153,7 +157,7 @@
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-warning text-uppercase mb-1">
                                                 Total Rent Items</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">2</div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalitems }}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
@@ -170,8 +174,9 @@
                                     <div class="row no-gutters align-items-center">
                                         <div class="col mr-2">
                                             <div class="text-xs font-weight-bold text-info text-uppercase mb-1">
-                                                Total Rents</div>
-                                            <div class="h5 mb-0 font-weight-bold text-gray-800">5</div>
+                                                Total Couriers
+                                            </div>
+                                            <div class="h5 mb-0 font-weight-bold text-gray-800">{{ $totalcouriers }}</div>
                                         </div>
                                         <div class="col-auto">
                                             <i class="fas fa-comments fa-2x text-gray-300"></i>
