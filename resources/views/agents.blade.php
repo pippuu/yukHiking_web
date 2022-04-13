@@ -107,7 +107,7 @@
                 </nav>
                 <!-- End of Topbar -->
 
-                <!-- Begin Page Content -->
+                <!-- Pending Agent Content -->
                 <div class="container-fluid">
 
                     @if($errors->any())
@@ -132,13 +132,71 @@
                         <div class="container-fluid">
 
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                            <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                                For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+                            <h1 class="h3 mb-2 text-gray-800">Pending Agents Table</h1>
+
+                        </div>
+                    </div>
+
+                    <!-- User Table -->
+                    <div>
+                        <table class="table table-bordered" style="margin-top: 20px">
+                            <thead>
+                                <tr>
+                                    <th class="col-sm-1">Id</th>
+                                    <th class="col-sm-1">Username</th>
+                                    <th class="col-sm-4">Alamat</th>
+                                    <th class="col-sm-1">ID Card</th>
+                                    <th class="col-sm-1">Accept</th>
+                                    <th class="col-sm-1">Decline</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                @foreach($agentsPending as $agent)
+                                <tr>
+                                    <td>{{ $agent->ID_agent }}</td>
+                                    <td>{{ $agent->username }}</td>
+                                    <td>{{ $agent->alamat }}</td>
+                                    <!-- <td>{{ $agent->ID_card }}</td> -->
+                                    <td>
+                                        <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#modalShow{{ $agent->ID_agent}}">Show</button>
+                                    </td>
+                                    <td>
+                                        <button onclick="location.href='/agents/accept/{{ $agent->username }}'" type="submit" class="btn btn-success">Accept</button>
+                                    </td>
+                                    <td>
+                                        <form action="/agents/destroy/{{$agent->username}}" method="get">
+                                            <button type="submit" class="btn btn-danger">Decline</button>
+                                        </form>
+                                    </td>
+                                </tr>
+                                <div class="modal fade" id="modalShow{{ $agent->ID_agent }}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalShow">ID Card Photo</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <img src="images/{{ $agent->ID_card }}" height="227px" width="358px">
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+                                @endforeach
+                            </tbody>
+                        </table><br>
+                    </div>
+
+                    <!-- Content Row -->
+                    <div class="row">
+
+                        <!-- Begin Page Content -->
+                        <div class="container-fluid">
+
+                            <!-- Page Heading -->
+                            <h1 class="h3 mb-2 text-gray-800">Accepted Agents Table</h1>
 
                             <!-- Buttons -->
-                            <!-- <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create User</button> -->
-                            <!-- onclick="window.location.href = '/users/create' -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Add Agent
                             </button>
@@ -146,7 +204,6 @@
                             <button onclick="location.href='/agents/destroyAll'" type="submit" class="btn btn-danger">Delete all agent</button>
 
                             <!-- Modal -->
-
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -162,11 +219,23 @@
                                                         <label for="username">Username:</label><br><br>
                                                         <label for="password">Password:</label><br><br>
                                                         <label for="alamat">Alamat:</label><br><br>
+                                                        <label for="status">Status:</label><br><br>
+                                                        <label for="ID_card">ID Card:</label><br><br>
                                                     </div>
                                                     <div>
                                                         <input type="text" id="username" name="username" placeholder="Budi"><br><br>
                                                         <input type="password" id="password" name="password" placeholder="*****"><br><br>
-                                                        <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga"><br>
+                                                        <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga"><br><br>
+                                                        <select id="status" name="status" style="margin-bottom: 10px">
+                                                            <option>Aktif</option>
+                                                            <option>Nonaktif</option>
+                                                            <option>Pending</option>
+                                                        </select><br><br>
+                                                        <select id="ID_card" name="ID_card">
+                                                            <option>ID1.jpg</option>
+                                                            <option>ID2.jpeg</option>
+                                                            <option>ID3.jpg</option>
+                                                        </select>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer" style="margin-top: 5%">
@@ -187,19 +256,20 @@
                             <thead>
                                 <tr>
                                     <th class="col-sm-1">Id</th>
-                                    <th class="col-sm-2">Username</th>
-                                    <!-- <th>Password (Encrypted)</th> -->
-                                    <th>Alamat</th>
-                                    <th class="col-sm-2">Edit</th>
-                                    <th class="col-sm-2">Delete</th>
+                                    <th class="col-sm-1">Username</th>
+                                    <th class="col-sm-4">Alamat</th>
+                                    <th class="col-sm-1">Status</th>
+                                    <th class="col-sm-1">Edit</th>
+                                    <th class="col-sm-1">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
-                                @foreach($agents as $agent)
+                                @foreach($agentsAccepted as $agent)
                                 <tr>
                                     <td>{{ $agent->ID_agent }}</td>
                                     <td>{{ $agent->username }}</td>
                                     <td>{{ $agent->alamat }}</td>
+                                    <td>{{ $agent->status }}</td>
                                     <td>
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $agent->ID_agent}}">Edit</button>
                                     </td>
@@ -224,10 +294,15 @@
                                                         <div style="margin-right:10px">
                                                             <label for="username">Username Baru:</label><br><br>
                                                             <label for="alamat">Alamat Baru:</label><br><br>
+                                                            <label for="status">Status Baru:</label><br><br>
                                                         </div>
                                                         <div>
                                                             <input type="text" id="username" name="username" placeholder="Budi"><br><br>
-                                                            <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga"><br>
+                                                            <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga"><br><br>
+                                                            <select id="status" name="status">
+                                                                <option>Aktif</option>
+                                                                <option>Nonaktif</option>
+                                                            </select>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer" style="margin-top: 5%">

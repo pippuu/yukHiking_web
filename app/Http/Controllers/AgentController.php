@@ -26,17 +26,20 @@ class AgentController extends Controller
      */
     public function create(Request $request)
     {
-
         $request->validate([
             'username' => ['required'],
             'password' => ['required'],
             'alamat' => ['required'],
+            'status' => ['required'],
+            'ID_card' => ['required']
         ]);
 
         $agent = new Agent;
         $agent->username = $request->username;
         $agent->password = Hash::make($request->password);
         $agent->alamat = $request->alamat;
+        $agent->status = $request->status;
+        $agent->ID_card = $request->ID_card;
 
         $agent->save();
 
@@ -62,9 +65,15 @@ class AgentController extends Controller
      */
     public function show()
     {
-        $agent = DB::table('agents')->get();
+        $agentsAccepted = DB::table('agents')->where('status', '!=', 'Pending')->get();
+        $agentsPending = DB::table('agents')->where('status', 'Pending')->get();
 
-        return view('agents')->with('agents', $agent);
+        $data = [
+            'agentsAccepted' => $agentsAccepted,
+            'agentsPending' => $agentsPending
+        ];
+
+        return view('agents')->with($data);
     }
 
     /**
@@ -90,11 +99,22 @@ class AgentController extends Controller
         $request->validate([
             'username' => ['required'],
             'alamat' => ['required'],
+            'status' => ['required'],
         ]);
 
         DB::table('agents')->updateOrInsert(
             ['username' => $agent],
-            ['username' => $request->username, 'alamat' => $request->alamat]
+            ['username' => $request->username, 'alamat' => $request->alamat, 'status' => $request->status]
+        );
+
+        return redirect()->back();
+    }
+
+    public function accept($agent)
+    {
+        DB::table('agents')->updateOrInsert(
+            ['username' => $agent],
+            ['status' => 'Nonaktif']
         );
 
         return redirect()->back();

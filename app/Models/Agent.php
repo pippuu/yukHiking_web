@@ -14,10 +14,11 @@ class Agent extends Model
         'username',
         'password',
         'alamat',
+        'status',
+        'ID_card'
     ];
 
     protected $hidden = [
         'password',
-
     ];
 }

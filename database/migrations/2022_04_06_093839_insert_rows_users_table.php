@@ -16,36 +16,36 @@ return new class extends Migration
      */
     public function up()
     {
-        DB::table('users')->insert(
-            array(
-                'username' => 'alfin',
-                'password' => Hash::make('admin'),
-                'alamat' => 'morioh',
-                'created_at' => 'datetime',
-                'updated_at' => 'datetime',
+        // DB::table('users')->insert(
+        //     array(
+        //         'username' => 'alfin',
+        //         'password' => Hash::make('admin'),
+        //         'alamat' => 'morioh',
+        //         'created_at' => 'datetime',
+        //         'updated_at' => 'datetime',
 
-            )
-        );
-        DB::table('users')->insert(
-            array(
-                'username' => 'rafif',
-                'password' => Hash::make('admin'),
-                'alamat' => 'egypt',
-                'created_at' => 'datetime',
-                'updated_at' => 'datetime',
+        //     )
+        // );
+        // DB::table('users')->insert(
+        //     array(
+        //         'username' => 'rafif',
+        //         'password' => Hash::make('admin'),
+        //         'alamat' => 'egypt',
+        //         'created_at' => 'datetime',
+        //         'updated_at' => 'datetime',
 
-            )
-        );
-        DB::table('users')->insert(
-            array(
-                'username' => 'jehua',
-                'password' => Hash::make('admin'),
-                'alamat' => 'solo',
-                'created_at' => 'datetime',
-                'updated_at' => 'datetime',
+        //     )
+        // );
+        // DB::table('users')->insert(
+        //     array(
+        //         'username' => 'jehua',
+        //         'password' => Hash::make('admin'),
+        //         'alamat' => 'solo',
+        //         'created_at' => 'datetime',
+        //         'updated_at' => 'datetime',
 
-            )
-        );
+        //     )
+        // );
     }
 
     /**

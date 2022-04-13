@@ -22,7 +22,9 @@ class AgentFactory extends Factory
         return [
             'username' => $this->faker->username,
             'password' => Hash::make($this->faker->username),
-            'alamat' => $this->faker->address
+            'alamat' => $this->faker->address,
+            'status' => $this->faker->randomElement($array = array('Aktif', 'Nonaktif', 'Pending')),
+            'ID_card' => $this->faker->randomElement($array = array('ID1.jpg', 'ID2.jpeg', 'ID3.jpg'))
         ];
     }
 }

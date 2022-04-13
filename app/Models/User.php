@@ -16,7 +16,6 @@ class User extends Model
     ];
 
     protected $hidden = [
-        'alamat',
         'password',
     ];
 }

@@ -19,7 +19,6 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-
             'ID_Agent' => $this->faker->unique()->buildingNumber,
             'Nama'  => $this->faker->randomElement($array = array('Tenda', 'Jaket', 'Sepatu', 'Selimut', 'Kompor', 'Syal', 'Backpack', 'Termos', 'Plastik', 'Jas Hujan')),
             'Stock'  => $this->faker->buildingNumber,
