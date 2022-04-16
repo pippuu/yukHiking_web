@@ -6,6 +6,7 @@
     <title>Login Admin</title>
     <script src="https://cdn.tailwindcss.com"></script>
     <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap@4.1.3/dist/css/bootstrap.min.css" integrity="sha384-MCw98/SFnGE8fJT3GXwEOngsV7Zt27NXFoaoApmYm81iuXoPkFOJwJ8ERdknLPMO" crossorigin="anonymous">
+    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
 </head>
 
 <body class="min-h-screen min-w-screen flex flex-col">
