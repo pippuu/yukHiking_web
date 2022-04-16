@@ -14,10 +14,11 @@ class UserController extends Controller
     //  *
     //  * @return \Illuminate\Http\Response
     //  */
-    // public function index()
-    // {
-    //     return view('welcome');
-    // }
+    public function index($users)
+    {
+        // dd($users);
+        return view('users')->with('users', $users);
+    }
 
     /**
      * Show the form for creating a new resource.
@@ -64,7 +65,8 @@ class UserController extends Controller
     {
         $users = DB::table('users')->get();
 
-        return view('users')->with('users', $users);
+        return $this->index($users);
+        // return view('users')->with('users', $users);
     }
 
     /**
@@ -119,5 +121,12 @@ class UserController extends Controller
         DB::table('users')->truncate();
 
         return redirect()->back();
+    }
+
+    public function search(Request $request)
+    {
+        $key = $request->inputSearch;
+        $users = DB::table('users')->where('username', 'LIKE', '%' . $key . '%')->get();
+        return $this->index($users);
     }
 }
