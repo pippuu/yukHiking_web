@@ -8,20 +8,20 @@
     <meta name="description" content="">
     <meta name="author" content="">
     <meta name="csrf-token" content="{{ csrf_token() }}">
-
+    <link rel="shortcut icon" href="{{ asset('images/logo.png') }}">
     <title>Users</title>
 
     <!-- Custom fonts for this template-->
 
     <!-- <link href="{{ asset('css/all.min.css') }}" rel="stylesheet" type="text/css"> -->
-    <link href="css/all.min.css" rel="stylesheet" type="text/css">
-    <link href="css/extras.css" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/all.min.css') }}" rel="stylesheet" type="text/css">
+    <link href="{{ asset('css/extras.css') }}" rel="stylesheet" type="text/css">
     <link href="https://fonts.googleapis.com/css?family=Nunito:200,200i,300,300i,400,400i,600,600i,700,700i,800,800i,900,900i" rel="stylesheet">
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.2/dist/css/bootstrap.min.css" rel="stylesheet" integrity="sha384-EVSTQN3/azprG1Anm3QDgpJLIm9Nao0Yz1ztcQTwFspd3yD65VohhpuuCOmLASjC" crossorigin="anonymous">
 
     <!-- Custom styles for this template-->
     <!-- <link href="{{ public_path('css'),  }}css/sb-admin-2.min.css" rel="stylesheet"> -->
-    <link href="css/sb-admin-2.css" rel="stylesheet">
+    <link href="{{ asset('css/sb-admin-2.css') }}" rel="stylesheet">
 </head>
 
 <body id="page-top">
@@ -35,7 +35,7 @@
             <!-- Sidebar - Brand -->
             <a class="sidebar-brand d-flex align-items-center justify-content-center" href={{ url('/dashboard') }}>
                 <div>
-                    <img src="images/logo.png" height="80px" width="80px">
+                    <img src="{{ asset('images/logo.png') }}" height="80px" width="80px">
                 </div>
                 <div>Pengaturan <i>yukHiking!</i></div>
             </a>
@@ -156,8 +156,9 @@
                                 <!-- Delete All Users Button -->
                                 <button onclick="location.href='/users/destroyAll'" type="submit" class="btn btn-danger">Delete all users</button>
                                 <!-- Search Button -->
-                                <form class="form-inline my-2 my-lg-0" id="searchForm">
-                                    <input class="form-control mr-sm-2" type="text" placeholder="Search" aria-label="Search" id="inputSearch" name="inputSearch">
+                                <form class="form-inline my-2 my-lg-0" id="searchForm" method="POST" action="/users/search">
+                                    @csrf
+                                    <input class="form-control mr-sm-2" type="text" placeholder="Search by username" aria-label="Search" id="inputSearch" name="inputSearch">
                                     <button class="btn btn-outline-success my-2 my-sm-0" type="submit" id="searchButton">Search</button>
                                 </form>
                             </div>
@@ -210,9 +211,9 @@
                                     <th class="col-sm-2">Delete</th>
                                 </tr>
                             </thead>
-                            <tbody>
+                            <tbody id="userTableBody">
                                 @foreach($users as $user)
-                                <tr id="table-contents">
+                                <tr id="tableContents">
                                     <td>{{ $user->ID_user }}</td>
                                     <td>{{ $user->username }}</td>
                                     <!-- <td>{{ $user->password }}</td> -->
@@ -344,16 +345,16 @@
                 })
             })
 
-            // $('#searchForm').submit(function(e) {
+            // $('#searchButton').submit(function(e) {
             //     e.preventDefault();
-            //     var inputs = $(this).serialize();
-            //     $.ajax({
-            //         type: "GET",
-            //         url: '/users/search',
-            //         data: {
-            //             key: inputs,
-            //         }
-            //     })
+            //     var key = $('#inputSearch');
+            //     let data = '{{ $users }}';
+            //     console.log(JSON.parse(data));
+            //     // console.log(data);
+
+            //     // if (key != null) {
+
+            //     // }
             // })
         });
     </script>
