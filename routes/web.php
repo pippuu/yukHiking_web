@@ -50,6 +50,8 @@ Route::post('/users/create', [UserController::class, 'create'])->middleware('aut
 Route::get('/users/destroy/{user}', [UserController::class, 'destroy'])->middleware('auth')->name('destroy');
 Route::get('/users/destroyAll', [UserController::class, 'destroyAll'])->middleware('auth');
 Route::post('/users/update/{user}', [UserController::class, 'update'])->middleware('auth')->name('update');
+Route::post('/users/search', [UserController::class, 'search'])->middleware('auth');
+
 
 Route::get('/couriers', [CourierController::class, 'show'])->middleware('auth');
 Route::post('/couriers/create', [CourierController::class, 'create'])->middleware('auth');
