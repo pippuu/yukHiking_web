@@ -64,6 +64,7 @@ Route::get('/agents', [AgentController::class, 'show'])->middleware('auth');
 Route::post('/agents/create', [AgentController::class, 'create'])->middleware('auth');
 Route::get('/agents/accept/{agent}', [AgentController::class, 'accept'])->middleware('auth');
 Route::get('/agents/destroy/{agent}', [AgentController::class, 'destroy'])->middleware('auth')->name('destroy');
+Route::post('/agents/decline/{agent}', [AgentController::class, 'decline'])->middleware('auth')->name('destroy');
 Route::get('/agents/destroyAll', [AgentController::class, 'destroyAll'])->middleware('auth');
 Route::post('/agents/update/{agent}', [AgentController::class, 'update'])->middleware('auth')->name('update');
 
