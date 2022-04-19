@@ -164,11 +164,76 @@
                                         <button onclick="location.href='/agents/accept/{{ $agent->username }}'" type="submit" class="btn btn-success">Accept</button>
                                     </td>
                                     <td>
-                                        <form action="/agents/destroy/{{$agent->username}}" method="get">
-                                            <button type="submit" class="btn btn-danger">Decline</button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDecline{{$agent->ID_agent}}">Decline</button>
                                     </td>
                                 </tr>
+
+                                <!-- Modal delete single -->
+                                <div class="modal fade" id="modalDelete{{ $agent->ID_agent}}" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/agents/destroy/{{ $agent->username }}" method="get">
+                                                    @csrf
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            Are you sure you want to delete this agent?<br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            <br><label for="username">Username:</label><br>
+                                                            <label for="status">Status:</label>
+                                                        </div>
+                                                        <div>
+                                                            <br><label>{{ $agent->username }}</label><br>
+                                                            <label>{{ $agent->status }}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="margin-top: 5%">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal decline single -->
+                                <div class="modal fade" id="modalDecline{{ $agent->ID_agent}}" tabindex="-1" aria-labelledby="modalDeclineLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Reason</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/agents/decline/{{ $agent->username }}" method="post">
+                                                    @csrf
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            Please provide the reason for the declination:<br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <textarea id="reasonBox" name="reasonBox" rows="4" cols="50"></textarea>
+                                                    </div>
+                                                    <div class="modal-footer" style="margin-top: 5%">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- modal show id card -->
                                 <div class="modal fade" id="modalShow{{ $agent->ID_agent }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -201,7 +266,9 @@
                                 Add Agent
                             </button>
 
-                            <button onclick="location.href='/agents/destroyAll'" type="submit" class="btn btn-danger">Delete all agent</button>
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAllModal">
+                                Delete All Agent
+                            </button>
 
                             <!-- Modal -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
@@ -247,6 +314,33 @@
                                     </div>
                                 </div>
                             </div>
+
+                            <!-- Modal deleteAll -->
+                            <div class="modal fade" id="deleteAllModal" tabindex="-1" aria-labelledby="deleteAllModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete All Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/agents/destroyAll" method="get">
+                                                @csrf
+                                                <div class="d-flex">
+                                                    <div style="margin-right:10px">
+                                                        Are you sure you want to delete all agents?
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="margin-top: 5%">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                    <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
                         </div>
                     </div>
 
@@ -273,12 +367,54 @@
                                     <td>
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $agent->ID_agent}}">Edit</button>
                                     </td>
+                                    @if($agent->status == 'Nonaktif')
                                     <td>
-                                        <form action="/agents/destroy/{{$agent->username}}" method="get">
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $agent->ID_agent}}">Delete</button>
                                     </td>
+                                    @endif
+                                    @if($agent->status == 'Aktif')
+                                    <td>
+                                        <div>Can't be deleted</div>
+                                    </td>
+                                    @endif
                                 </tr>
+
+                                <!-- Modal delete single -->
+                                <div class="modal fade" id="modalDelete{{ $agent->ID_agent}}" tabindex="-1" aria-labelledby="modalDeleteLabel" aria-hidden="true">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/agents/destroy/{{ $agent->username }}" method="get">
+                                                    @csrf
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            Are you sure you want to delete this agent?<br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            <br><label for="username">Username:</label><br>
+                                                            <label for="status">Status:</label>
+                                                        </div>
+                                                        <div>
+                                                            <br><label>{{ $agent->username }}</label><br>
+                                                            <label>{{ $agent->status }}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="margin-top: 5%">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
                                 <div class="modal fade" id="modalEdit{{ $agent->ID_agent }}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">

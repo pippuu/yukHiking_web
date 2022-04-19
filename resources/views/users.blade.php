@@ -142,10 +142,7 @@
                         <!-- Begin Page Content -->
                         <div class="container-fluid">
 
-                            <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                            <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                                For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
+
 
 
                             <div class="d-flex flex-row gap-3">
@@ -154,7 +151,7 @@
                                     Add User
                                 </button>
                                 <!-- Delete All Users Button -->
-                                <button onclick="location.href='/users/destroyAll'" type="submit" class="btn btn-danger">Delete all users</button>
+                                <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAllModal">Delete all users</button>
                                 <!-- Search Button -->
                                 <form class="form-inline my-2 my-lg-0" id="searchForm" method="POST" action="/users/search">
                                     @csrf
@@ -176,13 +173,16 @@
                                                 <div class="d-flex">
                                                     <div style="margin-right:10px">
                                                         <label for="username">Username:</label><br><br>
-                                                        <label for="password">Password:</label><br><br>
+                                                        <label for="password" style="margin-top:10px">Password:</label><br><br>
                                                         <label for="alamat">Alamat:</label><br><br>
                                                     </div>
                                                     <div>
-                                                        <input type="text" id="username" name="username" placeholder="Budi"><br><br>
-                                                        <input type="password" id="password" name="password" placeholder="*****"><br><br>
+                                                        <input type="text" id="username" name="username" placeholder="Budi"><br>
+                                                        <label id="usernameErrorLabel" style="color:red"></label><br>
+                                                        <input type="password" id="password" name="password" placeholder="*****"><br>
+                                                        <label id="passwordErrorLabel" style="color:red"></label><br>
                                                         <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga"><br>
+                                                        <label id="alamatErrorLabel" style="color:red"></label>
                                                     </div>
                                                 </div>
                                             </div>
@@ -191,6 +191,30 @@
                                                 <button type="submit" class="btn btn-primary" id="submitButton" name="submitButton">Add User</button>
                                             </div>
                                         </form>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <div class="modal fade" id="deleteAllModal" tabindex="-1" aria-labelledby="deleteAllModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete All Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/users/destroyAll" method="get">
+                                                <div class="d-flex">
+                                                    <div style="margin-right:10px">
+                                                        Are you sure you want to delete all users?
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="margin-top: 5%">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                    <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
+                                                </div>
+                                            </form>
+                                        </div>
                                     </div>
                                 </div>
                             </div>
@@ -223,11 +247,10 @@
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $user->ID_user}}">Edit</button>
                                     </td>
                                     <td>
-                                        <form action="/users/destroy/{{$user->username}}" method="get">
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{$user->ID_user}}">Delete</button>
                                     </td>
                                 </tr>
+                                <!-- Modal Edit User -->
                                 <div class="modal fade" id="modalEdit{{$user->ID_user}}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -257,6 +280,41 @@
                                                     <div class="modal-footer" style="margin-top: 5%">
                                                         <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                         <button type="submit" class="btn btn-primary" value="Submit">Update User</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
+
+                                <!-- Modal Delete User -->
+                                <div class="modal fade" id="modalDelete{{$user->ID_user}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/users/destroy/{{$user->username}}" method="get">
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            Are you sure you want to delete this user?<br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            <br><label for="username">Username:</label><br>
+                                                            <label for="status">Alamat:</label>
+                                                        </div>
+                                                        <div>
+                                                            <br><label>{{ $user->username }}</label><br>
+                                                            <label>{{ $user->alamat }}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="margin-top: 5%">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
                                                     </div>
                                                 </form>
                                             </div>
@@ -335,27 +393,33 @@
                         alamat: $('#alamat').val(),
                     },
                     success: function(response) {
-                        $('#addUserModal').modal('hide');
-                        alert('Successfully creating a new user.')
                         location.reload();
                     },
                     error: function(response) {
-                        alert('Failed to create a new user, please fill the empty field.');
+                        var usernameError = response.responseJSON.errors.username;
+                        var passwordError = response.responseJSON.errors.password;
+                        var alamatError = response.responseJSON.errors.alamat;
+
+                        if (usernameError != undefined) {
+                            $('#usernameErrorLabel').text(usernameError + "*");
+                        } else {
+                            $('#usernameErrorLabel').empty();
+                        };
+
+                        if (passwordError != undefined) {
+                            $('#passwordErrorLabel').text(passwordError + "*");
+                        } else {
+                            $('#passwordErrorLabel').empty();
+                        };
+
+                        if (alamatError != undefined) {
+                            $('#alamatErrorLabel').text(alamatError + "*");
+                        } else {
+                            $('#alamatErrorLabel').empty();
+                        };
                     }
                 })
             })
-
-            // $('#searchButton').submit(function(e) {
-            //     e.preventDefault();
-            //     var key = $('#inputSearch');
-            //     let data = '{{ $users }}';
-            //     console.log(JSON.parse(data));
-            //     // console.log(data);
-
-            //     // if (key != null) {
-
-            //     // }
-            // })
         });
     </script>
 </body>

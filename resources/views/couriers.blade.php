@@ -131,23 +131,17 @@
                         <div class="container-fluid">
 
                             <!-- Page Heading -->
-                            <h1 class="h3 mb-2 text-gray-800">Tables</h1>
-                            <p class="mb-4">DataTables is a third party plugin that is used to generate the demo table below.
-                                For more information about DataTables, please visit the <a target="_blank" href="https://datatables.net">official DataTables documentation</a>.</p>
 
                             <!-- Buttons -->
-                            <!-- <button type="submit" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#staticBackdrop">Create User</button> -->
-                            <!-- onclick="window.location.href = '/users/create' -->
                             <button type="button" class="btn btn-primary" data-bs-toggle="modal" data-bs-target="#exampleModal">
                                 Add Courier
                             </button>
 
-                            <!-- <button onclick="location.href='/couriers/createDummy'" type="submit" class="btn btn-primary" method="post">Enter data dummy</button> -->
+                            <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#deleteAllModal">
+                                Delete All Courier
+                            </button>
 
-                            <button onclick="location.href='/couriers/destroyAll'" type="submit" class="btn btn-danger">Delete all courier</button>
-
-                            <!-- Modal -->
-
+                            <!-- Modal Add New Courier -->
                             <div class="modal fade" id="exampleModal" tabindex="-1" aria-labelledby="exampleModalLabel" aria-hidden="true">
                                 <div class="modal-dialog">
                                     <div class="modal-content">
@@ -169,6 +163,7 @@
                                                         <input type="password" id="password" name="password" placeholder="*****"><br><br>
                                                         <select id="status" name="status">
                                                             <option>Aktif</option>
+                                                            <option>Transit</option>
                                                             <option>Nonaktif</option>
                                                         </select>
                                                         <br>
@@ -177,6 +172,32 @@
                                                 <div class="modal-footer" style="margin-top: 5%">
                                                     <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
                                                     <button type="submit" class="btn btn-primary" value="Submit">Add Courier</button>
+                                                </div>
+                                            </form>
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!-- Modal deleteAll -->
+                            <div class="modal fade" id="deleteAllModal" tabindex="-1" aria-labelledby="deleteAllModalLabel" aria-hidden="true">
+                                <div class="modal-dialog">
+                                    <div class="modal-content">
+                                        <div class="modal-header">
+                                            <h5 class="modal-title" id="exampleModalLabel">Delete All Confirmation</h5>
+                                            <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                        </div>
+                                        <div class="modal-body">
+                                            <form action="/couriers/destroyAll" method="get">
+                                                @csrf
+                                                <div class="d-flex">
+                                                    <div style="margin-right:10px">
+                                                        Are you sure you want to delete all couriers?
+                                                    </div>
+                                                </div>
+                                                <div class="modal-footer" style="margin-top: 5%">
+                                                    <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                    <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
                                                 </div>
                                             </form>
                                         </div>
@@ -206,16 +227,15 @@
                                     <td>{{ $courier->username }}</td>
                                     <!-- <td>$user->password</td> -->
                                     <td>{{ $courier->status }}</td>
-
                                     <td>
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $courier->ID_courier}}">Edit</button>
                                     </td>
                                     <td>
-                                        <form action="/couriers/destroy/{{ $courier->username }}" method="get">
-                                            <button type="submit" class="btn btn-danger">Delete</button>
-                                        </form>
+                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{ $courier->ID_courier}}">Delete</button>
                                     </td>
                                 </tr>
+
+                                <!-- Modal Edit Courier -->
                                 <div class="modal fade" id="modalEdit{{$courier->ID_courier}}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
@@ -223,7 +243,6 @@
                                                 <h5 class="modal-title" id="modalEdit">Edit Courier</h5>
                                                 <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
                                             </div>
-
                                             <div class="modal-body">
                                                 <form action="/couriers/update/{{ $courier->username }}" method="post">
                                                     @csrf
@@ -236,6 +255,7 @@
                                                             <input type="text" id="username" name="username" placeholder="Budi"><br><br>
                                                             <select id="status" name="status">
                                                                 <option>Aktif</option>
+                                                                <option>Transit</option>
                                                                 <option>Nonaktif</option>
                                                             </select>
                                                         </div>
@@ -249,12 +269,47 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endforeach
+
+                                <!-- Modal Delete Courier -->
+                                <div class="modal fade" id="modalDelete{{ $courier->ID_courier}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalDelete">Delete Confirmation</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+                                            <div class="modal-body">
+                                                <form action="/couriers/destroy/{{ $courier->username }}" method="get">
+                                                    @csrf
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            Are you sure you want to delete this courier?<br>
+                                                        </div>
+                                                    </div>
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            <br><label for="username">Username:</label><br>
+                                                            <label for="status">Status:</label>
+                                                        </div>
+                                                        <div>
+                                                            <br><label>{{ $courier->username }}</label><br>
+                                                            <label>{{ $courier->status }}</label>
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="margin-top: 5%">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
+                                                        <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                    @endforeach
+                                </div>
                             </tbody>
                         </table>
                     </div>
                 </div>
-                <!-- /.container-fluid -->
             </div>
             <!-- End of Main Content -->
 
