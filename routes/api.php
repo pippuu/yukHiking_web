@@ -3,6 +3,9 @@
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserControllerAPI;
+use App\Http\Controllers\API\CourierControllerAPI;
+use App\Http\Controllers\API\ItemControllerAPI;
+
 
 /*
 |--------------------------------------------------------------------------
@@ -20,3 +23,7 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 });
 
 Route::apiResource('users', UserControllerAPI::class);
+
+Route::apiResource('couriers', CourierControllerAPI::class);
+
+Route::apiResource('items', ItemControllerAPI::class);
