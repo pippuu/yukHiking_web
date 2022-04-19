@@ -65,7 +65,7 @@ class AgentController extends Controller
      */
     public function show()
     {
-        $agentsAccepted = DB::table('agents')->where('status', '!=', 'Pending')->get();
+        $agentsAccepted = DB::table('agents')->where('status', 'Aktif')->orWhere('status', 'Nonaktif')->get();
         $agentsPending = DB::table('agents')->where('status', 'Pending')->get();
 
         $data = [
@@ -133,9 +133,23 @@ class AgentController extends Controller
         return redirect()->back();
     }
 
+    public function decline(Request $request, $agent)
+    {
+        $reason = $request->reasonBox;
+        DB::table('agents')->updateOrInsert(
+            ['username' => $agent],
+            [
+                'status' => 'Declined',
+                'alasan_decline' => $reason,
+            ]
+        );
+
+        return redirect()->back();
+    }
+
     public function destroyAll()
     {
-        DB::table('agents')->truncate();
+        DB::table('agents')->where('status', '!=', 'Pending')->delete();
 
         return redirect()->back();
     }
