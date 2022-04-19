@@ -17,7 +17,7 @@ items
 
 informasi progress:
 
--fungsionalitas use case terhadap verifikasi agen
--CRUD untuk tabel user, agent, courier, dan item
--database seeding dan factory untuk database testing terhadap tabel-tabel yang dibuat
--penggunaan API untuk mendapatkan informasi user dengan POSTMAN
+- fungsionalitas use case terhadap verifikasi agen
+- CRUD untuk tabel user, agent, courier, dan item
+- database seeding dan factory untuk database testing terhadap tabel-tabel yang dibuat
+- penggunaan API untuk mendapatkan informasi user dengan POSTMAN
