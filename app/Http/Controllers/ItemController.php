@@ -27,14 +27,16 @@ class ItemController extends Controller
     {
         $request->validate([
             'ID_Agent' => ['required'],
-            'Nama' => ['required'],
+            'Nama_Agent' => ['required'],
+            'Nama_Barang' => ['required'],
             'Stock' => ['required'],
             'Harga' => ['required'],
         ]);
 
         $items = new Item;
         $items->ID_Agent = $request->ID_Agent;
-        $items->Nama = $request->Nama;
+        $items->Nama_Agent = $request->Nama_Agent;
+        $items->Nama_Barang = $request->Nama_Barang;
         $items->Stock = $request->Stock;
         $items->Harga = $request->Harga;
         $items->save();
@@ -88,14 +90,15 @@ class ItemController extends Controller
     {
         $request->validate([
             'ID_Agent' => ['required'],
-            'Nama' => ['required'],
+            'Nama_Agent' => ['required'],
+            'Nama_Barang' => ['required'],
             'Stock' => ['required'],
             'Harga' => ['required'],
         ]);
 
         DB::table('items')->updateOrInsert(
             ['ID_Agent' => $item],
-            ['ID_Agent' => $request->ID_Agent, 'Nama' => $request->Nama, 'Stock' => $request->Stock, 'Harga' => $request->Harga]
+            ['ID_Agent' => $request->ID_Agent, 'Nama_Agent' => $request->Nama_Agent, 'Nama_Barang' => $request->Nama_Barang, 'Stock' => $request->Stock, 'Harga' => $request->Harga]
         );
 
         return redirect()->back();
