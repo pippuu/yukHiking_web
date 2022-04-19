@@ -20,6 +20,7 @@ return new class extends Migration
             $table->string('alamat');
             $table->string('status');
             $table->string('ID_card');
+            $table->string('alasan_decline')->nullable();
             $table->timestamps();
         });
     }

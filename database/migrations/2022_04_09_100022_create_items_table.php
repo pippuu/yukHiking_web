@@ -17,7 +17,8 @@ return new class extends Migration
             $table->id('ID_Items');
             $table->timestamps();
             $table->string('ID_Agent');
-            $table->string('Nama');
+            $table->string('Nama_Agent');
+            $table->string('Nama_Barang');
             $table->string('Stock');
             $table->string('Harga');
         });
