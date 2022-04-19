@@ -15,7 +15,8 @@ class Agent extends Model
         'password',
         'alamat',
         'status',
-        'ID_card'
+        'ID_card',
+        'alasan_decline',
     ];
 
     protected $hidden = [
