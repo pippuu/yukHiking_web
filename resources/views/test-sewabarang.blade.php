@@ -188,13 +188,15 @@
                                     <th class="col-sm-2">Nama Barang</th>
                                     <th class="col-sm-1">Stock</th>
                                     <th class="col-sm-2">Harga</th>
-                                    <th class="col-sm-2">Edit</th>
-                                    <th class="col-sm-2">Delete</th>
+                                    <th class="col-sm-2">Penyewa</th>
+                                    <th class="col-sm-1">Tanggal Sewa</th>
+                                    <th class="col-sm-1">Sewa</th>
+                                    <th class="col-sm-1">Edit</th>
+                                    <th class="col-sm-1">Delete</th>
                                 </tr>
                             </thead>
                             <tbody>
                                 @foreach($items as $item)
-                                @if($item->ID_Penyewa == null)
                                 <tr>
                                     <td>{{ $item->ID_Items }}</td>
                                     <td>{{ $item->ID_Agent }}</td>
@@ -202,6 +204,11 @@
                                     <td>{{ $item->Nama_Barang }}</td>
                                     <td>{{ $item->Stock }}</td>
                                     <td>{{ $item->Harga }}</td>
+                                    <td>{{ $item->ID_Penyewa }}</td>
+                                    <td>{{ $item->tanggal_sewa }}</td>
+                                    <td>
+                                        <button type="button" class="btn btn-success" data-bs-toggle="modal" data-bs-target="#modalSewa{{ $item->ID_Agent}}">Sewa</button>
+                                    </td>
                                     <td>
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $item->ID_Agent}}">Edit</button>
                                     </td>
@@ -209,6 +216,40 @@
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{$item->ID_Items}}">Delete</button>
                                     </td>
                                 </tr>
+
+                                <div class="modal fade" id="modalSewa{{$item->ID_Agent}}">
+                                    <div class="modal-dialog">
+                                        <div class="modal-content">
+                                            <div class="modal-header">
+                                                <h5 class="modal-title" id="modalSewa">Sewa Item</h5>
+                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
+                                            </div>
+
+                                            <div class="modal-body">
+                                                <form action="/test/sewabarang/sewa" method="post">
+                                                    @csrf
+                                                    <div class="d-flex">
+                                                        <div style="margin-right:10px">
+                                                            <label for="id_penyewa">ID Penyewa</label><br><br>
+                                                            <label for="id_item">ID Item</label><br><br>
+                                                            <label for="jumlah_sewa">Jumlah Sewa</label><br><br>
+                                                        </div>
+                                                        <div>
+                                                            <input type="text" id="id_penyewa" name="id_penyewa" placeholder="1"><br><br>
+                                                            <input type="text" id="id_item" name="id_item" placeholder="1"><br><br>
+                                                            <input type="numbers" id="jumlah_sewa" name="jumlah_sewa" placeholder="10"><br><br>
+
+                                                        </div>
+                                                    </div>
+                                                    <div class="modal-footer" style="margin-top: 5%">
+                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
+                                                        <button type="submit" class="btn btn-primary" value="Submit">Update Items</button>
+                                                    </div>
+                                                </form>
+                                            </div>
+                                        </div>
+                                    </div>
+                                </div>
 
                                 <!-- //update data pake modal -->
                                 <div class="modal fade" id="modalEdit{{$item->ID_Agent}}">
@@ -231,160 +272,11 @@
                                                             <label for="Harga">Harga Baru:</label><br><br>
                                                         </div>
                                                         <div>
-                                                            <input type="text" id="ID_Agent" name="ID_Agent" placeholder="T009" value="{{$item->ID_Agent}}"><br><br>
-                                                            <input type="text" id="Nama_Agent" name="Nama_Agent" placeholder="Budi" value="{{ $item->ID_Agent }}"><br><br>
-                                                            <input type="text" id="Nama_Barang" name="Nama_Barang" placeholder="Tenda" value="{{ $item->Nama_Barang }}"><br><br>
-                                                            <input type="text" id="Stock" name="Stock" placeholder="5" value="{{ $item->Stock }}"><br><br>
-                                                            <input type="text" id="Harga" name="Harga" placeholder="100.000" value="{{ $item->Harga }}"><br><br>
-                                                        </div>
-                                                    </div>
-                                                    <div class=" modal-footer" style="margin-top: 5%">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">Close</button>
-                                                        <button type="submit" class="btn btn-primary" value="Submit">Update Items</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- //delete data pake modal -->
-                                <div class="modal fade" id="modalDelete{{$item->ID_Items}}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Delete Confirmation</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/items/destroy/{{ $item->ID_Items }}" method="get">
-                                                    <div class="d-flex">
-                                                        <div style="margin-right:10px">
-                                                            Are you sure you want to delete this Items?<br>
-                                                        </div>
-                                                    </div>
-                                                    <div class="d-flex">
-                                                        <div style="margin-right:10px">
-                                                            <br><label for="username">Nama Agent:</label><br>
-                                                            <label for="status">Nama Barang:</label>
-                                                        </div>
-                                                        <div>
-                                                            <br><label>{{ $item->Nama_Agent}}</label><br>
-                                                            <label>{{ $item->Nama_Barang }}</label>
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer" style="margin-top: 5%">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                        <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-
-                                <!-- Modal deleteAll -->
-                                <div class="modal fade" id="deleteAllModalItems">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="exampleModalLabel">Delete All Confirmation</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-                                            <div class="modal-body">
-                                                <form action="/items/destroyAll" method="get">
-                                                    @csrf
-                                                    <div class="d-flex">
-                                                        <div style="margin-right:10px">
-                                                            Are you sure you want to delete all items?
-                                                        </div>
-                                                    </div>
-                                                    <div class="modal-footer" style="margin-top: 5%">
-                                                        <button type="button" class="btn btn-secondary" data-bs-dismiss="modal">No</button>
-                                                        <button type="submit" class="btn btn-danger" value="Submit">Yes</button>
-                                                    </div>
-                                                </form>
-                                            </div>
-                                        </div>
-                                    </div>
-                                </div>
-                                @endif
-                                @endforeach
-                            </tbody>
-                        </table>
-                    </div>
-
-                    <!-- Page Heading -->
-                    <div class="d-sm-flex align-items-center justify-content-between mb-4">
-                        <h1 class="h3 mb-0 text-gray-800">Items Rent</h1>
-                    </div>
-
-                    <div>
-                        <table class="table table-bordered" style="margin-top: 20px">
-                            <thead>
-                                <tr>
-                                    <th class="col-sm-1">Id_Item</th>
-                                    <th class="col-sm-1">Id_Agent</th>
-                                    <th class="col-sm-1">Nama Agent</th>
-                                    <th class="col-sm-2">Nama Barang</th>
-                                    <th class="col-sm-1">Stock</th>
-                                    <th class="col-sm-2">Harga</th>
-                                    <th class="col-sm-1">Penyewa</th>
-                                    <th class="col-sm-1">Tanggal Sewa</th>
-                                    <th class="col-sm-2">Edit</th>
-                                    <th class="col-sm-2">Delete</th>
-                                </tr>
-                            </thead>
-                            <tbody>
-                                @foreach($items as $item)
-                                @if($item->ID_Penyewa != null)
-                                <tr>
-                                    <td>{{ $item->ID_Items }}</td>
-                                    <td>{{ $item->ID_Agent }}</td>
-                                    <td>{{ $item->Nama_Agent }}</td>
-                                    <td>{{ $item->Nama_Barang }}</td>
-                                    <td>{{ $item->Stock }}</td>
-                                    <td>{{ $item->Harga }}</td>
-                                    <td>{{ $item->ID_Penyewa }}</td>
-                                    <td>{{ $item->tanggal_sewa }}</td>
-                                    <td>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEditSewa{{ $item->ID_Agent}}">Edit</button>
-                                    </td>
-                                    <td>
-                                        <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{$item->ID_Items}}">Delete</button>
-                                    </td>
-                                </tr>
-
-                                <!-- //update data pake modal -->
-                                <div class="modal fade" id="modalEditSewa{{$item->ID_Agent}}">
-                                    <div class="modal-dialog">
-                                        <div class="modal-content">
-                                            <div class="modal-header">
-                                                <h5 class="modal-title" id="modalEditSewa">Edit Items</h5>
-                                                <button type="button" class="btn-close" data-bs-dismiss="modal" aria-label="Close"></button>
-                                            </div>
-
-                                            <div class="modal-body">
-                                                <form action="/items/update/{{ $item->ID_Agent }}" method="post">
-                                                    @csrf
-                                                    <div class="d-flex">
-                                                        <div style="margin-right:10px">
-                                                            <label for="ID_Agent">ID_Agent Baru:</label><br><br>
-                                                            <label for="Nama_Agent">Nama_Agent Baru:</label><br><br>
-                                                            <label for="Nama_Barang">Nama_Barang Baru:</label><br><br>
-                                                            <label for="Stock">Stock Baru:</label><br><br>
-                                                            <label for="Harga">Harga Baru:</label><br><br>
-                                                            <label for="ID_Penyewa">Penyewa Baru:</label><br><br>
-                                                            <label for="tanggal_sewa">Tanggal Sewa Baru:</label><br><br>
-                                                        </div>
-                                                        <div>
-                                                            <input type="text" id="ID_Agent" name="ID_Agent" placeholder="T009" value="{{$item->ID_Agent}}"><br><br>
-                                                            <input type="text" id="Nama_Agent" name="Nama_Agent" placeholder="Budi" value="{{ $item->ID_Agent }}"><br><br>
-                                                            <input type="text" id="Nama_Barang" name="Nama_Barang" placeholder="Tenda" value="{{ $item->Nama_Barang }}"><br><br>
-                                                            <input type="text" id="Stock" name="Stock" placeholder="5" value="{{ $item->Stock }}"><br><br>
-                                                            <input type="text" id="Harga" name="Harga" placeholder="100.000" value="{{ $item->Harga }}"><br><br>
-                                                            <input type="text" id="ID_Penyewa" name="ID_Penyewa" placeholder="5" value="{{ $item->ID_Penyewa }}"><br><br>
-                                                            <input type="date" id="tanggal_sewa" name="tanggal_sewa" placeholder="11/06/2022" value="{{ $item->tanggal_sewa }}"><br><br>
+                                                            <input type="text" id="ID_Agent" name="ID_Agent" placeholder="T009"><br><br>
+                                                            <input type="text" id="Nama_Agent" name="Nama_Agent" placeholder="Budi"><br><br>
+                                                            <input type="text" id="Nama_Barang" name="Nama_Barang" placeholder="Tenda"><br><br>
+                                                            <input type="text" id="Stock" name="Stock" placeholder="5"><br><br>
+                                                            <input type="text" id="Harga" name="Harga" placeholder="100.000"><br><br>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer" style="margin-top: 5%">
@@ -431,6 +323,9 @@
                                         </div>
                                     </div>
                                 </div>
+
+
+
                                 <!-- Modal deleteAll -->
                                 <div class="modal fade" id="deleteAllModalItems">
                                     <div class="modal-dialog">
@@ -456,7 +351,15 @@
                                         </div>
                                     </div>
                                 </div>
-                                @endif
+
+
+
+
+
+
+
+
+
                                 @endforeach
                             </tbody>
                         </table>

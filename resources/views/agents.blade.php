@@ -433,8 +433,8 @@
                                                             <label for="status">Status Baru:</label><br><br>
                                                         </div>
                                                         <div>
-                                                            <input type="text" id="username" name="username" placeholder="Budi"><br><br>
-                                                            <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga"><br><br>
+                                                            <input type="text" id="username" name="username" placeholder="Budi" value="{{$agent->username}}"><br><br>
+                                                            <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga" value="{{$agent->alamat}}"><br><br>
                                                             <select id="status" name="status">
                                                                 <option>Aktif</option>
                                                                 <option>Nonaktif</option>

@@ -27,3 +27,12 @@ Route::apiResource('users', UserControllerAPI::class);
 Route::apiResource('couriers', CourierControllerAPI::class);
 
 Route::apiResource('items', ItemControllerAPI::class);
+
+// ini salah nandain array
+// Route::apiResource('items/sewa', [ItemControllerAPI::class, 'sewaBarang']);
+
+// Testing API
+
+// Route::apiResource('items', 'ItemControllerAPI@index');
+
+// Route::post('/items', 'ItemControllerAPI@sewaBarang');

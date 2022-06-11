@@ -273,8 +273,8 @@
                                                         <div>
                                                             <!-- <p style="margin-bottom:30px">{{ $user->username }}</p>
                                                             <p style="margin-bottom:35px">{{ $user->alamat }}</p> -->
-                                                            <input type="text" id="username" name="username" placeholder="Budi"><br><br>
-                                                            <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga"><br>
+                                                            <input type="text" id="username" name="username" placeholder="Budi" value="{{$user->username}}"><br><br>
+                                                            <input type="text" id="alamat" name="alamat" placeholder="Jl. Mangga" value="{{$user->alamat}}"><br>
                                                         </div>
                                                     </div>
                                                     <div class="modal-footer" style="margin-top: 5%">

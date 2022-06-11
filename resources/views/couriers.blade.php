@@ -252,7 +252,7 @@
                                                             <label for="status">Status Baru:</label><br><br>
                                                         </div>
                                                         <div>
-                                                            <input type="text" id="username" name="username" placeholder="Budi"><br><br>
+                                                            <input type="text" id="username" name="username" placeholder="Budi" value="{{$courier->username}}"><br><br>
                                                             <select id="status" name="status">
                                                                 <option>Aktif</option>
                                                                 <option>Transit</option>

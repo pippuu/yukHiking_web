@@ -19,8 +19,12 @@ return new class extends Migration
             $table->string('ID_Agent');
             $table->string('Nama_Agent');
             $table->string('Nama_Barang');
-            $table->string('Stock');
+            $table->integer('Stock');
             $table->string('Harga');
+            $table->string('ID_Penyewa')->nullable(true);
+            $table->date('tanggal_sewa')->nullable(true);
+
+            $table->foreign('ID_Penyewa')->references('ID_user')->on('users');
         });
     }
 

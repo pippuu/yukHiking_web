@@ -83,3 +83,6 @@ Route::post('/items/create', [ItemController::class, 'create'])->middleware('aut
 Route::get('/items/destroy/{item}', [ItemController::class, 'destroy'])->middleware('auth')->name('destroy');
 Route::get('/items/destroyAll', [ItemController::class, 'destroyAll'])->middleware('auth');
 Route::post('/items/update/{item}', [ItemController::class, 'update'])->middleware('auth')->name('update');
+
+Route::get('/test/sewabarang', [ItemController::class, 'test'])->middleware('auth');
+Route::post('/test/sewabarang/sewa', [ItemController::class, 'sewaBarang'])->middleware('auth');
