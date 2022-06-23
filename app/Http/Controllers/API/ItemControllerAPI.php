@@ -64,7 +64,9 @@ class ItemControllerAPI extends Controller
         $newItem->Nama_Barang = $targetItem->get()[0]->Nama_Barang;
         $newItem->Stock = $request->jumlah_sewa;
         $newItem->Harga = $targetItem->get()[0]->Harga;
+        $newItem->Deskripsi = $targetItem->get()[0]->Deskripsi;
         $newItem->ID_Penyewa = $request->id_penyewa;
+        $newItem->Late_id = $defaultStock->get()[0]->ID_Items;
         // $newItem->tanggal_sewa = date("Y-m-d");
         $newItem->ID_Transaksi = $request->id_transaksi;
 
@@ -133,6 +135,7 @@ class ItemControllerAPI extends Controller
         $newItem->Stock = $request->jumlah_sewa;
         $newItem->Harga = $targetItem->get()[0]->Harga;
         $newItem->ID_Penyewa = $request->id_penyewa;
+        $newItem->Late_id = $defaultStock->get()[0]->ID_Items;
         $newItem->tanggal_sewa = date("Y-m-d");
         $newItem->save();
 

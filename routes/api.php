@@ -35,6 +35,8 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
 
 Route::get('/users', [UserControllerAPI::class, 'index']);
 
+Route::post('/users/create', [UserControllerAPI::class, 'store']);
+
 Route::post('/users/update', [UserControllerAPI::class, 'update']);
 
 Route::get('/agents', [AgentControllerAPI::class, 'index']);
@@ -42,6 +44,8 @@ Route::get('/agents', [AgentControllerAPI::class, 'index']);
 Route::get('/items', [ItemControllerAPI::class, 'index']);
 
 Route::get('/couriers', [CourierControllerAPI::class, 'index']);
+
+Route::get('/transaksis', [TransaksiControllerAPI::class, 'index']);
 
 Route::post('/transaksis/create', [TransaksiControllerAPI::class, 'create']);
 

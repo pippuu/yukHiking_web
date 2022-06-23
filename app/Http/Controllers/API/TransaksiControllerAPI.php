@@ -35,7 +35,7 @@ class TransaksiControllerAPI extends Controller
 
         $transaksi = new Transaksi();
         $transaksi->tanggal_sewa = $request->tanggal_sewa;
-        $transaksi->tanggal_kembali = $request->alamat_kembali;
+        $transaksi->tanggal_kembali = $request->tanggal_kembali;
 
         $transaksi->save();
 

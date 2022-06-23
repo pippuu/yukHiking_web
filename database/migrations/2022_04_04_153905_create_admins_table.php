@@ -28,9 +28,6 @@ return new class extends Migration
             array(
                 'username' => 'admin',
                 'password' => Hash::make('admin'),
-                'created_at' => 'datetime',
-                'updated_at' => 'datetime',
-
             )
         );
     }

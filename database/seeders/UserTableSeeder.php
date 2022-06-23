@@ -5,6 +5,7 @@ namespace Database\Seeders;
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
 use App\Models\User;
+use Illuminate\Support\Facades\Schema;
 
 
 class UserTableSeeder extends Seeder
@@ -16,11 +17,13 @@ class UserTableSeeder extends Seeder
      */
     public function run()
     {
+        Schema::disableForeignKeyConstraints();
         User::truncate();
 
         User::factory()
             ->count(20)
             ->create();
+        Schema::enableForeignKeyConstraints();
         // $faker = \Faker\Factory::Create();
 
         // for ($i = 0; $i < 50; $i++) {

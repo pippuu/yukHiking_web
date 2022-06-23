@@ -19,6 +19,8 @@ return new class extends Migration
             $table->string('Nama_Barang');
             $table->integer('Stock');
             $table->string('Harga');
+            $table->string('Deskripsi')->nullable(true);
+            $table->string('Late_id')->nullable(true);
 
             $table->foreignId('ID_agent');
             $table->foreignId('ID_Penyewa')->nullable(true);

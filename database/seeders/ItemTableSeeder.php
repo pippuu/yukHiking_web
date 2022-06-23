@@ -4,6 +4,7 @@ namespace Database\Seeders;
 
 use Illuminate\Database\Console\Seeds\WithoutModelEvents;
 use Illuminate\Database\Seeder;
+use Illuminate\Support\Facades\Schema;
 use App\Models\Item;
 
 
@@ -16,12 +17,13 @@ class ItemTableSeeder extends Seeder
      */
     public function run()
     {
-
+        Schema::disableForeignKeyConstraints();
         Item::truncate();
 
         Item::factory()
             ->count(5)
             ->create();
+        Schema::enableForeignKeyConstraints();
         // Items::truncate();
 
         // $faker = \Faker\Factory::Create();

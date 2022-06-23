@@ -37,6 +37,7 @@ class ItemController extends Controller
         $items->Nama_Barang = $request->Nama_Barang;
         $items->Stock = $request->Stock;
         $items->Harga = $request->Harga;
+        $items->Deskripsi = $request->Deskripsi;
         $items->ID_Penyewa = $request->ID_Penyewa;
         $items->save();
 
@@ -59,6 +60,7 @@ class ItemController extends Controller
         $newItem->Nama_Barang = $targetItem->get()[0]->Nama_Barang;
         $newItem->Stock = $request->jumlah_sewa;
         $newItem->Harga = $targetItem->get()[0]->Harga;
+        $newItem->Deskripsi = $targetItem->get()[0]->Deskripsi;
         $newItem->ID_Penyewa = $request->id_penyewa;
         // $newItem->tanggal_sewa = date("Y-m-d");
         $newItem->ID_Transaksi = $request->id_transaksi;
@@ -118,6 +120,7 @@ class ItemController extends Controller
             'Nama_Barang' => ['required'],
             'Stock' => ['required'],
             'Harga' => ['required'],
+            'Deskripsi' => ['required'],
         ]);
 
         DB::table('items')->updateOrInsert(
@@ -128,6 +131,7 @@ class ItemController extends Controller
                 'Nama_Barang' => $request->Nama_Barang,
                 'Stock' => $request->Stock,
                 'Harga' => $request->Harga,
+                'Deskripsi' => $request->Deskripsi,
                 'ID_Penyewa' => $request->ID_Penyewa,
                 'tanggal_sewa' => $request->tanggal_sewa
             ]

@@ -154,12 +154,14 @@
                                                         <label for="Nama_Barang">Nama_Barang:</label><br><br>
                                                         <label for="Stock">Stock:</label><br><br>
                                                         <label for="Harga">Harga:</label><br><br>
+                                                        <label for="Harga">Deskripsi:</label><br><br>
                                                     </div>
                                                     <div>
                                                         <input type="text" id="ID_Agent" name="ID_Agent" placeholder="T009"><br><br>
                                                         <input type="text" id="Nama_Barang" name="Nama_Barang" placeholder="Tenda"><br><br>
                                                         <input type="text" id="Stock" name="Stock" placeholder="5"><br><br>
                                                         <input type="text" id="Harga" name="Harga" placeholder="100.000"><br><br>
+                                                        <input type="text" id="Deskripsi" name="Deskripsi" placeholder="..."><br><br>
                                                     </div>
                                                 </div>
                                                 <div class="modal-footer" style="margin-top: 5%">
@@ -185,6 +187,7 @@
                                     <th class="col-sm-2">Nama Barang</th>
                                     <th class="col-sm-1">Stock</th>
                                     <th class="col-sm-2">Harga</th>
+                                    <th class="col-sm-2">Deskripsi</th>
                                     <th class="col-sm-2">Edit</th>
                                     <th class="col-sm-2">Delete</th>
                                 </tr>
@@ -198,6 +201,7 @@
                                     <td>{{ $item->Nama_Barang }}</td>
                                     <td>{{ $item->Stock }}</td>
                                     <td>{{ $item->Harga }}</td>
+                                    <td>{{ $item->Deskripsi }}</td>
                                     <td>
                                         <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $item->ID_agent}}">Edit</button>
                                     </td>
@@ -224,12 +228,14 @@
                                                             <label for="Nama_Barang">Nama_Barang Baru:</label><br><br>
                                                             <label for="Stock">Stock Baru:</label><br><br>
                                                             <label for="Harga">Harga Baru:</label><br><br>
+                                                            <label for="Harga">Deskripsi Baru:</label><br><br>
                                                         </div>
                                                         <div>
                                                             <input type="text" id="ID_Agent" name="ID_Agent" placeholder="T009" value="{{$item->ID_agent}}"><br><br>
                                                             <input type="text" id="Nama_Barang" name="Nama_Barang" placeholder="Tenda" value="{{ $item->Nama_Barang }}"><br><br>
                                                             <input type="text" id="Stock" name="Stock" placeholder="5" value="{{ $item->Stock }}"><br><br>
                                                             <input type="text" id="Harga" name="Harga" placeholder="100.000" value="{{ $item->Harga }}"><br><br>
+                                                            <input type="text" id="Deskripsi" name="Deskripsi" placeholder="..." value="{{ $item->Deskripsi }}"><br><br>
                                                         </div>
                                                     </div>
                                                     <div class=" modal-footer" style="margin-top: 5%">
@@ -319,7 +325,9 @@
                                     <th class="col-sm-1">Id_agent</th>
                                     <th class="col-sm-2">Nama Barang</th>
                                     <th class="col-sm-1">Stock</th>
-                                    <th class="col-sm-2">Harga</th>
+                                    <th class="col-sm-1">Harga</th>
+                                    <th class="col-sm-1">Deskripsi</th>
+                                    <th class="col-sm-1">ID awal</th>
                                     <th class="col-sm-1">Penyewa</th>
                                     <th class="col-sm-1">Tanggal Sewa</th>
                                     <th class="col-sm-2">Edit</th>
@@ -335,6 +343,8 @@
                                     <td>{{ $item->Nama_Barang }}</td>
                                     <td>{{ $item->Stock }}</td>
                                     <td>{{ $item->Harga }}</td>
+                                    <td>{{ $item->Deskripsi }}</td>
+                                    <td>{{ $item->Late_id }}</td>
                                     <td>{{ $item->ID_Penyewa }}</td>
                                     <td>{{ $item->tanggal_sewa }}</td>
                                     <td>

@@ -26,9 +26,9 @@ class UserControllerAPI extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function create()
+    public function create(Request $request)
     {
-        //
+        
     }
 
     /**
@@ -41,6 +41,7 @@ class UserControllerAPI extends Controller
     {
         $request->validate([
             'username' => ['required'],
+            'password' => ['required'],
             'alamat' => ['required'],
         ]);
 
