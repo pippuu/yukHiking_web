@@ -10,7 +10,6 @@ class Agent extends Model
     use HasFactory;
 
     protected $fillable = [
-        'ID_agent',
         'username',
         'password',
         'alamat',

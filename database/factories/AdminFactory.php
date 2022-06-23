@@ -3,15 +3,15 @@
 namespace Database\Factories;
 
 use Illuminate\Database\Eloquent\Factories\Factory;
-use App\Models\User;
 use Illuminate\Support\Facades\Hash;
+use App\Models\Admin;
 
 /**
- * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\User>
+ * @extends \Illuminate\Database\Eloquent\Factories\Factory<\App\Models\Admin>
  */
-class UserFactory extends Factory
+class AdminFactory extends Factory
 {
-    protected $model = User::class;
+    protected $model = Admin::class;
     /**
      * Define the model's default state.
      *
@@ -20,9 +20,8 @@ class UserFactory extends Factory
     public function definition()
     {
         return [
-            'username' => $this->faker->username,
-            'password' => Hash::make('test'),
-            'alamat' => $this->faker->address
+            'username' => 'admin2',
+            'password' => Hash::make('sussy'),
         ];
     }
 }

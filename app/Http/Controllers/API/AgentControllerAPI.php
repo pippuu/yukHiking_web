@@ -3,12 +3,10 @@
 namespace App\Http\Controllers\API;
 
 use App\Http\Controllers\Controller;
-use App\Models\User;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Hash;
-use Illuminate\Support\Facades\DB;
+use App\Models\Agent;
 
-class UserControllerAPI extends Controller
+class AgentControllerAPI extends Controller
 {
     /**
      * Display a listing of the resource.
@@ -17,8 +15,8 @@ class UserControllerAPI extends Controller
      */
     public function index()
     {
-        $users = User::all();
-        return response()->json($users);
+        $agents = Agent::all();
+        return response()->json($agents);
     }
 
     /**
@@ -39,20 +37,7 @@ class UserControllerAPI extends Controller
      */
     public function store(Request $request)
     {
-        $request->validate([
-            'username' => ['required'],
-            'alamat' => ['required'],
-        ]);
-
-        $user = new User([
-            'username' => $request->username,
-            'password' => Hash::make($request->password),
-            'alamat' => $request->alamat
-        ]);
-
-        $user->save();
-
-        return response()->json($user);
+        //
     }
 
     /**
@@ -84,20 +69,9 @@ class UserControllerAPI extends Controller
      * @param  int  $id
      * @return \Illuminate\Http\Response
      */
-    public function update(Request $request)
+    public function update(Request $request, $id)
     {
-        $request->validate([
-            'username' => ['required'],
-            'alamat' => ['required'],
-        ]);
-
-        DB::table('users')
-            ->updateOrInsert(
-                ['ID_user' => $request->ID_user],
-                ['username' => $request->username, 'alamat' => $request->alamat]
-            );
-
-        return redirect()->back();
+        //
     }
 
     /**

@@ -5,17 +5,11 @@ namespace App\Models;
 use Illuminate\Database\Eloquent\Factories\HasFactory;
 use Illuminate\Database\Eloquent\Model;
 
-class User extends Model
+class Transaksi extends Model
 {
     use HasFactory;
-
     protected $fillable = [
-        'username',
-        'password',
-        'alamat',
+        'tanggal_sewa',
+        'tanggal_kembali'
     ];
-
-    // protected $hidden = [
-    //     'password',
-    // ];
 }

@@ -9,11 +9,11 @@ class Item extends Model
 {
     use HasFactory;
     protected $fillable = [
-        'ID_Items',
-        'ID_Agent',
-        'Nama',
+        'ID_agent',
+        'Nama_Barang',
         'Stock',
         'Harga',
-
+        'ID_Penyewa',
+        'ID_Transaksi'
     ];
 }

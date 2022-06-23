@@ -16,15 +16,17 @@ return new class extends Migration
         Schema::create('items', function (Blueprint $table) {
             $table->id('ID_Items');
             $table->timestamps();
-            $table->string('ID_Agent');
-            $table->string('Nama_Agent');
             $table->string('Nama_Barang');
             $table->integer('Stock');
             $table->string('Harga');
-            $table->string('ID_Penyewa')->nullable(true);
-            $table->date('tanggal_sewa')->nullable(true);
 
+            $table->foreignId('ID_agent');
+            $table->foreignId('ID_Penyewa')->nullable(true);
+            $table->foreignId('ID_Transaksi')->nullable(true);
+
+            $table->foreign('ID_agent')->references('ID_agent')->on('agents');
             $table->foreign('ID_Penyewa')->references('ID_user')->on('users');
+            $table->foreign('ID_Transaksi')->references('ID_Transaksi')->on('transaksis');
         });
     }
 

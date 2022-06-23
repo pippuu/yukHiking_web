@@ -27,15 +27,13 @@ class ItemController extends Controller
     {
         $request->validate([
             'ID_Agent' => ['required'],
-            'Nama_Agent' => ['required'],
             'Nama_Barang' => ['required'],
             'Stock' => ['required'],
             'Harga' => ['required'],
         ]);
 
         $items = new Item;
-        $items->ID_Agent = $request->ID_Agent;
-        $items->Nama_Agent = $request->Nama_Agent;
+        $items->ID_agent = $request->ID_Agent;
         $items->Nama_Barang = $request->Nama_Barang;
         $items->Stock = $request->Stock;
         $items->Harga = $request->Harga;
@@ -46,9 +44,9 @@ class ItemController extends Controller
     }
 
     public function sewaBarang(Request $request)
-    // request: id_item, id_penyewa, jumlah_sewa
+    // request: id_item, id_penyewa, jumlah_sewa, id_transaksi
     {
-        dd($request);
+        // dd($request);
         // dd(date("Y-m-d"));
         $defaultStock = DB::table('items')->where('ID_Items', $request->id_item)->get()[0]->Stock;
         $targetItem = DB::table('items')->where('ID_Items', $request->id_item);
@@ -56,13 +54,15 @@ class ItemController extends Controller
         $targetItem->update(['Stock' => $defaultStock - $request->jumlah_sewa]);
 
         $newItem = new Item;
-        $newItem->ID_Agent = $targetItem->get()[0]->ID_Agent;
+        $newItem->ID_agent = $targetItem->get()[0]->ID_Agent;
         $newItem->Nama_Agent = $targetItem->get()[0]->Nama_Agent;
         $newItem->Nama_Barang = $targetItem->get()[0]->Nama_Barang;
         $newItem->Stock = $request->jumlah_sewa;
         $newItem->Harga = $targetItem->get()[0]->Harga;
         $newItem->ID_Penyewa = $request->id_penyewa;
-        $newItem->tanggal_sewa = date("Y-m-d");
+        // $newItem->tanggal_sewa = date("Y-m-d");
+        $newItem->ID_Transaksi = $request->id_transaksi;
+
         $newItem->save();
 
         return redirect()->back();

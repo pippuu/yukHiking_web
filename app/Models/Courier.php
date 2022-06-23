@@ -10,7 +10,6 @@ class Courier extends Model
     use HasFactory;
 
     protected $fillable = [
-        'ID_courier',
         'username',
         'password',
         'status',

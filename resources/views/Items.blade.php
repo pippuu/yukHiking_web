@@ -150,15 +150,13 @@
                                                 @csrf
                                                 <div class="d-flex">
                                                     <div style="margin-right:10px">
-                                                        <label for="ID_Agent">ID_Agent:</label><br><br>
-                                                        <label for="Nama_Agent">Nama_Agent:</label><br><br>
+                                                        <label for="ID_agent">ID_Agent:</label><br><br>
                                                         <label for="Nama_Barang">Nama_Barang:</label><br><br>
                                                         <label for="Stock">Stock:</label><br><br>
                                                         <label for="Harga">Harga:</label><br><br>
                                                     </div>
                                                     <div>
                                                         <input type="text" id="ID_Agent" name="ID_Agent" placeholder="T009"><br><br>
-                                                        <input type="text" id="Nama_Agent" name="Nama_Agent" placeholder="Budi"><br><br>
                                                         <input type="text" id="Nama_Barang" name="Nama_Barang" placeholder="Tenda"><br><br>
                                                         <input type="text" id="Stock" name="Stock" placeholder="5"><br><br>
                                                         <input type="text" id="Harga" name="Harga" placeholder="100.000"><br><br>
@@ -184,7 +182,6 @@
                                 <tr>
                                     <th class="col-sm-1">Id_Item</th>
                                     <th class="col-sm-1">Id_Agent</th>
-                                    <th class="col-sm-1">Nama Agent</th>
                                     <th class="col-sm-2">Nama Barang</th>
                                     <th class="col-sm-1">Stock</th>
                                     <th class="col-sm-2">Harga</th>
@@ -197,13 +194,12 @@
                                 @if($item->ID_Penyewa == null)
                                 <tr>
                                     <td>{{ $item->ID_Items }}</td>
-                                    <td>{{ $item->ID_Agent }}</td>
-                                    <td>{{ $item->Nama_Agent }}</td>
+                                    <td>{{ $item->ID_agent }}</td>
                                     <td>{{ $item->Nama_Barang }}</td>
                                     <td>{{ $item->Stock }}</td>
                                     <td>{{ $item->Harga }}</td>
                                     <td>
-                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $item->ID_Agent}}">Edit</button>
+                                        <button type="button" class="btn btn-warning" data-bs-toggle="modal" data-bs-target="#modalEdit{{ $item->ID_agent}}">Edit</button>
                                     </td>
                                     <td>
                                         <button type="button" class="btn btn-danger" data-bs-toggle="modal" data-bs-target="#modalDelete{{$item->ID_Items}}">Delete</button>
@@ -211,7 +207,7 @@
                                 </tr>
 
                                 <!-- //update data pake modal -->
-                                <div class="modal fade" id="modalEdit{{$item->ID_Agent}}">
+                                <div class="modal fade" id="modalEdit{{$item->ID_agent}}">
                                     <div class="modal-dialog">
                                         <div class="modal-content">
                                             <div class="modal-header">
@@ -220,19 +216,17 @@
                                             </div>
 
                                             <div class="modal-body">
-                                                <form action="/items/update/{{ $item->ID_Agent }}" method="post">
+                                                <form action="/items/update/{{ $item->ID_agent }}" method="post">
                                                     @csrf
                                                     <div class="d-flex">
                                                         <div style="margin-right:10px">
                                                             <label for="ID_Agent">ID_Agent Baru:</label><br><br>
-                                                            <label for="Nama_Agent">Nama_Agent Baru:</label><br><br>
                                                             <label for="Nama_Barang">Nama_Barang Baru:</label><br><br>
                                                             <label for="Stock">Stock Baru:</label><br><br>
                                                             <label for="Harga">Harga Baru:</label><br><br>
                                                         </div>
                                                         <div>
-                                                            <input type="text" id="ID_Agent" name="ID_Agent" placeholder="T009" value="{{$item->ID_Agent}}"><br><br>
-                                                            <input type="text" id="Nama_Agent" name="Nama_Agent" placeholder="Budi" value="{{ $item->ID_Agent }}"><br><br>
+                                                            <input type="text" id="ID_Agent" name="ID_Agent" placeholder="T009" value="{{$item->ID_agent}}"><br><br>
                                                             <input type="text" id="Nama_Barang" name="Nama_Barang" placeholder="Tenda" value="{{ $item->Nama_Barang }}"><br><br>
                                                             <input type="text" id="Stock" name="Stock" placeholder="5" value="{{ $item->Stock }}"><br><br>
                                                             <input type="text" id="Harga" name="Harga" placeholder="100.000" value="{{ $item->Harga }}"><br><br>
@@ -265,11 +259,9 @@
                                                     </div>
                                                     <div class="d-flex">
                                                         <div style="margin-right:10px">
-                                                            <br><label for="username">Nama Agent:</label><br>
                                                             <label for="status">Nama Barang:</label>
                                                         </div>
                                                         <div>
-                                                            <br><label>{{ $item->Nama_Agent}}</label><br>
                                                             <label>{{ $item->Nama_Barang }}</label>
                                                         </div>
                                                     </div>
@@ -324,8 +316,7 @@
                             <thead>
                                 <tr>
                                     <th class="col-sm-1">Id_Item</th>
-                                    <th class="col-sm-1">Id_Agent</th>
-                                    <th class="col-sm-1">Nama Agent</th>
+                                    <th class="col-sm-1">Id_agent</th>
                                     <th class="col-sm-2">Nama Barang</th>
                                     <th class="col-sm-1">Stock</th>
                                     <th class="col-sm-2">Harga</th>
@@ -340,8 +331,7 @@
                                 @if($item->ID_Penyewa != null)
                                 <tr>
                                     <td>{{ $item->ID_Items }}</td>
-                                    <td>{{ $item->ID_Agent }}</td>
-                                    <td>{{ $item->Nama_Agent }}</td>
+                                    <td>{{ $item->ID_agent }}</td>
                                     <td>{{ $item->Nama_Barang }}</td>
                                     <td>{{ $item->Stock }}</td>
                                     <td>{{ $item->Harga }}</td>
@@ -370,7 +360,6 @@
                                                     <div class="d-flex">
                                                         <div style="margin-right:10px">
                                                             <label for="ID_Agent">ID_Agent Baru:</label><br><br>
-                                                            <label for="Nama_Agent">Nama_Agent Baru:</label><br><br>
                                                             <label for="Nama_Barang">Nama_Barang Baru:</label><br><br>
                                                             <label for="Stock">Stock Baru:</label><br><br>
                                                             <label for="Harga">Harga Baru:</label><br><br>
@@ -379,7 +368,6 @@
                                                         </div>
                                                         <div>
                                                             <input type="text" id="ID_Agent" name="ID_Agent" placeholder="T009" value="{{$item->ID_Agent}}"><br><br>
-                                                            <input type="text" id="Nama_Agent" name="Nama_Agent" placeholder="Budi" value="{{ $item->ID_Agent }}"><br><br>
                                                             <input type="text" id="Nama_Barang" name="Nama_Barang" placeholder="Tenda" value="{{ $item->Nama_Barang }}"><br><br>
                                                             <input type="text" id="Stock" name="Stock" placeholder="5" value="{{ $item->Stock }}"><br><br>
                                                             <input type="text" id="Harga" name="Harga" placeholder="100.000" value="{{ $item->Harga }}"><br><br>
@@ -414,11 +402,9 @@
                                                     </div>
                                                     <div class="d-flex">
                                                         <div style="margin-right:10px">
-                                                            <br><label for="username">Nama Agent:</label><br>
                                                             <label for="status">Nama Barang:</label>
                                                         </div>
                                                         <div>
-                                                            <br><label>{{ $item->Nama_Agent}}</label><br>
                                                             <label>{{ $item->Nama_Barang }}</label>
                                                         </div>
                                                     </div>

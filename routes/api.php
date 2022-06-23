@@ -5,6 +5,8 @@ use Illuminate\Support\Facades\Route;
 use App\Http\Controllers\API\UserControllerAPI;
 use App\Http\Controllers\API\CourierControllerAPI;
 use App\Http\Controllers\API\ItemControllerAPI;
+use App\Http\Controllers\API\AgentControllerAPI;
+use App\Http\Controllers\API\TransaksiControllerAPI;
 
 
 /*
@@ -22,7 +24,26 @@ Route::middleware('auth:sanctum')->get('/user', function (Request $request) {
     return $request->user();
 });
 
-Route::apiResource('users', UserControllerAPI::class);
+// Route::apiResource('users', UserControllerAPI::class);
+
+// Route::resource('users', 'API/UserControllerAPI');
+
+// Route::get('users/index', 'API/UserControllerAPI@index');
+
+// Route::get('users/index', [UserController::class, 'show']);
+
+
+Route::get('/users', [UserControllerAPI::class, 'index']);
+
+Route::post('/users/update', [UserControllerAPI::class, 'update']);
+
+Route::get('/agents', [AgentControllerAPI::class, 'index']);
+
+Route::get('/items', [ItemControllerAPI::class, 'index']);
+
+Route::get('/couriers', [CourierControllerAPI::class, 'index']);
+
+Route::post('/transaksis/create', [TransaksiControllerAPI::class, 'create']);
 
 Route::apiResource('couriers', CourierControllerAPI::class);
 

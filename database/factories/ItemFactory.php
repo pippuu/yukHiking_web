@@ -19,8 +19,7 @@ class ItemFactory extends Factory
     public function definition()
     {
         return [
-            'ID_Agent' => $this->faker->unique()->buildingNumber,
-            'Nama_Agent' => $this->faker->username,
+            'ID_Agent' => $this->faker->numberBetween($min = 1, $max = 15),
             'Nama_Barang'  => $this->faker->randomElement($array = array('Tenda', 'Jaket', 'Sepatu', 'Selimut', 'Kompor', 'Syal', 'Backpack', 'Termos', 'Plastik', 'Jas Hujan')),
             'Stock'  => $this->faker->buildingNumber,
             'Harga' => $this->faker->numberBetween($min = 5000, $max = 50000)

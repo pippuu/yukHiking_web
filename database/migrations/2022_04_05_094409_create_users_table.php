@@ -22,6 +22,17 @@ return new class extends Migration
             $table->string('alamat');
             $table->timestamps();
         });
+
+        // DB::table('users')->insert(
+        //     array(
+        //         'username' => 'rafif',
+        //         'password' => Hash::make('fausta'),
+        //         'alamat' => 'antah berantah',
+        //         'created_at' => 'datetime',
+        //         'updated_at' => 'datetime',
+
+        //     )
+        // );
     }
 
     /**
